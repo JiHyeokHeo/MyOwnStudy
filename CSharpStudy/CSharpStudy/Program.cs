@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 // 프로그램을 실행하면 운영체제가 운영할수 있는 메모리를 제공한다
 // 거기서 우리가 알아야할 메모리는 스택 메모리, 힙 메모리가 있다. (다른것도 더 있지만 두개가 일단 중요)
@@ -41,38 +42,41 @@
 
 namespace CSharpStudy
 {
-    // Copy
-    struct Mage
-    {
-        public int hp;
-        public int attack;
-    }
-
-    // Ref
     class Knight
     {
+        // 필드
+        // Knight 클래스 한에서 오로지 1개만 존재
+        static public int counter = 1;
+
+        public int id;
         public int hp;
         public int attack;
+
+        // static을 안붙이면 각 객체에 종속적인 친구가 되는 것이다. 
+        // 하지만 static을 붙이면 Knight 클래스에 단 하나에만 존재하게 되는것이다.
+        
+        static public void Test()
+        {
+            counter++;
+        }
+
+        // 꼭 static이라해서 인스턴스 값을 못넣는것은 아니다.
+        static public Knight CreateKnight()
+        {
+            Knight knight = new Knight();
+            knight.hp = 100;
+            knight.attack = 1;
+            return knight;
+        }
 
         public Knight()
         {
+            id = counter;
+            counter++;
+
             hp = 100;
             attack = 10;
             Console.WriteLine("생성자 호출!");
-        }
-                                // 기본 생성자가 작동 후 hp 변경 생성자가 작동됨. this() 키워드
-        public Knight(int hp) : this()
-        {
-            this.hp = hp;
-            Console.WriteLine("int 생성자 호출!");
-        }
-
-        // 한개짜리 버전도 호출할 수 있다.
-        public Knight(int hp, int attack) : this(hp)
-        {
-            this.hp = hp;
-            this.attack = attack;
-            Console.WriteLine("int int 생성자 호출!");
         }
 
         public Knight Clone()
@@ -98,7 +102,14 @@ namespace CSharpStudy
     {
         static void Main(string[] args)
         {
-            Knight knight1 = new Knight(50, 50);
+            Knight knight = Knight.CreateKnight(); // static
+            knight.Move(); // 일반
+
+            // WriteLine은 static 타입이라는 것을 예상할수 있다.
+            Console.WriteLine();
+
+            Random rand = new Random();
+            rand.Next(0, 2);
 
         }
     }
