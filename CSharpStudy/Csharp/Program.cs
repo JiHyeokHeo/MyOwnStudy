@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace Csharp
 {
@@ -6,23 +8,26 @@ namespace Csharp
     {
         static void Main(string[] args)
         {
-            int[,] map = new int[2, 3];
+            int[] arr = new int[10];
 
-            // 가변배열
-            int[][] a = new int[3][];
-            a[0] = new int[5];
-            a[1] = new int[12];
-            a[2] = new int[3];
+            // List <- 동적 배열
+            List<int> list = new List<int>();
+            for(int i=0; i<5; i++)
+                list.Add(i);
 
-            for(int y=0; y < a.Length; y++)
-            {
-                for(int x=0; x<a[y].Length; x++)
-                {
-                    Console.Write(a[y][x]);
-                }
-                Console.WriteLine();
-            }
+            // 삽입 삭제
+            list.Insert(2, 10);
+
+            bool isSuccess = list.Remove(3);
+
+            for (int i = 0; i < 5; i++)
+                Console.WriteLine(list[i]);
+
+            foreach(int num in list)
+                Console.WriteLine(num);
+            
         }
     }
 }
+
 
