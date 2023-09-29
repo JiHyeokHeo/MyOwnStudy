@@ -3,46 +3,53 @@
 
 namespace CSharpStudy
 {
-    // OOP(은닉성/상속석/다형성)
-
-    // 자동차
-    // 핸들 페달 차문을 열고
-        // 전기장치 엔진 기름 <-> 외부 노출
-    
-    class Knight
+    // OOP(은닉성/상속성/다형성)
+    class Player
     {
-        // 접근 한정자
-        // public protected private
-
-        private int hp;
-        protected int mp;
-
-        public void SetHp(int hp)
-        {
-            this.hp = hp;
-        }
-
-        private void SecretFunction()
-        {
-            hp = 20;
-        }
+        protected int hp;
+        protected int attack;
     }
 
-    class SuperKnight : Knight
+
+    class Knight : Player
     {
-        void Test()
-        {
-            mp = 20;
-        }
+
+    }
+
+    class Mage : Player
+    {
+        public int mp;
     }
 
     class Program
     {
+        static Player FindPlayerById(int id)
+        {
+            // id에 해당하는 플레이어를 탐색
+
+            // 못찾았으면
+
+            return null;
+
+        }
+
+        static void EnterGame(Player player)
+        {
+            //bool isMage = (player is Mage);
+            Mage mage = (player as Mage);
+            if (mage != null)
+            {
+                mage.mp = 10;
+            }
+        }
+
         static void Main(string[] args)
         {
             Knight knight = new Knight();
-            
-            
+            Mage mage = new Mage();
+
+
+            EnterGame(mage);
         }
     }
 
