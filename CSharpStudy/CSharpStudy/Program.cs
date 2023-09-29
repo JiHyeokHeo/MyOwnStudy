@@ -42,41 +42,52 @@ using System.Runtime.CompilerServices;
 
 namespace CSharpStudy
 {
-    class Knight
+    // OOP(은닉성/상송석/다형성)
+
+    class Player // 부모 / 기반 
     {
         // 필드
-        // Knight 클래스 한에서 오로지 1개만 존재
         static public int counter = 1;
-
         public int id;
         public int hp;
         public int attack;
 
-        // static을 안붙이면 각 객체에 종속적인 친구가 되는 것이다. 
-        // 하지만 static을 붙이면 Knight 클래스에 단 하나에만 존재하게 되는것이다.
-        
-        static public void Test()
+        public Player()
         {
-            counter++;
+            Console.WriteLine("Player 생성자 호출!");
         }
 
-        // 꼭 static이라해서 인스턴스 값을 못넣는것은 아니다.
+        public Player(int hp)
+        {
+            this.hp = hp;
+            Console.WriteLine("Player hp 생성자 호출!");
+        }
+
+    }
+
+    class Mage : Player
+    {
+        
+    }
+
+    class Archer : Player
+    {
+
+    }
+
+    class Knight : Player // 자식 / 파생 클래스
+    {
+        public Knight() : base(100)
+        {
+            Console.WriteLine("Knight 생성자 호출!");
+        }
+
         static public Knight CreateKnight()
         {
             Knight knight = new Knight();
             knight.hp = 100;
             knight.attack = 1;
             return knight;
-        }
-
-        public Knight()
-        {
-            id = counter;
-            counter++;
-
-            hp = 100;
-            attack = 10;
-            Console.WriteLine("생성자 호출!");
         }
 
         public Knight Clone()
@@ -103,13 +114,7 @@ namespace CSharpStudy
         static void Main(string[] args)
         {
             Knight knight = Knight.CreateKnight(); // static
-            knight.Move(); // 일반
-
-            // WriteLine은 static 타입이라는 것을 예상할수 있다.
-            Console.WriteLine();
-
-            Random rand = new Random();
-            rand.Next(0, 2);
+     
 
         }
     }
