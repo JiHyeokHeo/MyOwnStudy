@@ -54,6 +54,27 @@ namespace CSharpStudy
         public int hp;
         public int attack;
 
+        public Knight()
+        {
+            hp = 100;
+            attack = 10;
+            Console.WriteLine("생성자 호출!");
+        }
+                                // 기본 생성자가 작동 후 hp 변경 생성자가 작동됨. this() 키워드
+        public Knight(int hp) : this()
+        {
+            this.hp = hp;
+            Console.WriteLine("int 생성자 호출!");
+        }
+
+        // 한개짜리 버전도 호출할 수 있다.
+        public Knight(int hp, int attack) : this(hp)
+        {
+            this.hp = hp;
+            this.attack = attack;
+            Console.WriteLine("int int 생성자 호출!");
+        }
+
         public Knight Clone()
         {
             Knight knight = new Knight();
@@ -66,6 +87,7 @@ namespace CSharpStudy
         {
             Console.WriteLine("Knight Move");
         }
+
         public void Attack()
         {
             Console.WriteLine("Knight Attack");
@@ -74,39 +96,10 @@ namespace CSharpStudy
 
     class Program
     {
-        static void KillMage(Mage mage)
-        {
-            mage.hp = 0;
-        }
-
-        static void KillKnight(Knight knight)
-        {
-            knight.hp = 0;
-        }
-
         static void Main(string[] args)
         {
-            Mage mage;
-            mage.hp = 100;
-            mage.attack = 50;
+            Knight knight1 = new Knight(50, 50);
 
-            Mage mage2 = mage;
-            mage2.hp = 0;
-
-            Knight knight1 = new Knight();
-            knight1.hp = 100;
-            knight1.attack = 10;
-            // KillKnight(knight);
-
-            //Knight knight2 = knight; // 얕은 복사
-            //knight2.hp = 0;
-            // 이 경우엔 knight1.hp = 100;  knight2.hp = 0을 나타내게 된다.
-            
-
-            
-            // 새롭게 만들어진 친구이다. // 분리된 객체이다.
-            Knight knight2 = knight1.Clone(); // 깊은 복사
-            knight2.hp = 0;
         }
     }
 }
