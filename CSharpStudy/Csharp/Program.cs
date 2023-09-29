@@ -1,84 +1,45 @@
-﻿namespace Csharp
+﻿using System;
+
+namespace Csharp
 {
-    class Player
-    {
-
-    }
-
-    class Monster
-    {
-
-    }
-
     class Program
     {
-        static int GetHighestScore(int[] scores)
+        class Map
         {
-            int maxValue = 0;
-            foreach (int score in scores)
+            int[,] tiles = { 
+                { 1, 1, 1, 1, 1 },
+                { 1, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 1 },
+                { 1, 1, 1, 1, 1 }
+            };
+
+            public void Render()
             {
-                if(maxValue <= score)
+                ConsoleColor defaultColor = Console.ForegroundColor;
+
+                for(int y =0; y < tiles.GetLength(1); y++)
                 {
-                    maxValue = score;
-                }
-            }
+                    for(int x=0; x < tiles.GetLength(0); x++)
+                    {
+                        if (tiles[y, x] == 1)
+                            Console.ForegroundColor = ConsoleColor.Red;
+                        else
+                            Console.ForegroundColor = ConsoleColor.Green;
 
-            return maxValue;
-        }
-
-
-
-        static int GetAverageScore(int[] scores)
-        {
-            int average = 0;
-
-            foreach (int score in scores) 
-            {
-                average += score;
-            }
-
-            if (scores.Length == 0)
-                return 0;
-
-            return average /= scores.Length;
-        }
-
-        static int GetIndexOf(int[] scores, int value)
-        {
-            if (value > scores.Length - 1)
-                return -1;
-
-            return scores[value];
-        }
-
-        static void Sort(int[] scores)
-        {
-            for(int i=0; i<scores.Length; i++)
-            {
-                int minindex = i;
-                for(int j= i; j<scores.Length; j++)
-                {
-                    if (scores[j] < scores[minindex])
-                        minindex = j;
+                        Console.Write('\u25cf');
+                    }
+                    Console.WriteLine();
                 }
 
-                int temp = scores[i];
-                scores[i] = scores[minindex];
-                scores[minindex] = temp;
+                Console.ForegroundColor = defaultColor;
             }
         }
-
 
         static void Main(string[] args)
         {
-            // 배열
-            int[] scores = new int[5] { 10, 30, 40, 20, 50 };
-
-            Sort(scores);
-            foreach (int score in scores)
-            {
-                Console.WriteLine(score);
-            }
+            Map map = new Map();
+            map.Render();
         }
     }
 }
