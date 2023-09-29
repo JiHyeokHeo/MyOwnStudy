@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using System.Xml.Schema;
 
 // 프로그램을 실행하면 운영체제가 운영할수 있는 메모리를 제공한다
 // 거기서 우리가 알아야할 메모리는 스택 메모리, 힙 메모리가 있다. (다른것도 더 있지만 두개가 일단 중요)
@@ -52,15 +53,14 @@ namespace CSharpStudy
         public int hp;
         public int attack;
 
-        public Player()
+        public void Move()
         {
-            Console.WriteLine("Player 생성자 호출!");
+            Console.WriteLine("Player Move");
         }
 
-        public Player(int hp)
+        public void Attack()
         {
-            this.hp = hp;
-            Console.WriteLine("Player hp 생성자 호출!");
+            Console.WriteLine("Player Attack");
         }
 
     }
@@ -77,17 +77,17 @@ namespace CSharpStudy
 
     class Knight : Player // 자식 / 파생 클래스
     {
-        public Knight() : base(100)
-        {
-            Console.WriteLine("Knight 생성자 호출!");
-        }
-
         static public Knight CreateKnight()
         {
             Knight knight = new Knight();
             knight.hp = 100;
             knight.attack = 1;
             return knight;
+        }
+
+        public void Stun()
+        {
+
         }
 
         public Knight Clone()
@@ -98,15 +98,6 @@ namespace CSharpStudy
             return knight;
         }
 
-        public void Move()
-        {
-            Console.WriteLine("Knight Move");
-        }
-
-        public void Attack()
-        {
-            Console.WriteLine("Knight Attack");
-        }
     }
 
     class Program
@@ -114,8 +105,10 @@ namespace CSharpStudy
         static void Main(string[] args)
         {
             Knight knight = Knight.CreateKnight(); // static
-     
 
+            knight.Move();
         }
+
+
     }
 }
