@@ -1,66 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace Csharp
 {
-    enum ItemType
-    {
-        Weapon,
-        Armor,
-        Amulet,
-        Ring,
-    }
-
-    enum Rarity
-    {
-        Normal,
-        Uncommon,
-        Rare,
-    }
-
-    class Item
-    {
-        public ItemType ItemType;
-        public Rarity Rarity;
-    }
-
     class Program
     {
-        static List<Item> _items = new List<Item>();
+        // c# 전용 
+        // 언리얼 에서는 어렵게 구현되어 있음.
 
-        delegate Return MyFunc<T, Return>(T item);
-        delegate Return MyFunc<Return>();
-        delegate Return MyFunc<T1,T2, Return>(T1 t1, T2 t2);
-
-        static Item FindItem(Func<Item, bool> selector)
+        class Important : System.Attribute
         {
-            foreach(Item item in _items)
-            {
-                if (selector(item))
-                    return item;
-            }
-            return null;
+            string message;
+
+            public Important(string message) { this.message = message; }
+        }
+
+        class Monster
+        {
+            // hp 입니다. 중요한 정보입니다.
+            [Important("VeryImportant")]
+            public int hp;
+
+            protected int attack;
+            private float speed;
+
+            void Attack() { }
         }
 
         static void Main(string[] args)
         {
-            _items.Add(new Item() { ItemType = ItemType.Weapon, Rarity = Rarity.Normal });
-            _items.Add(new Item() { ItemType = ItemType.Armor, Rarity = Rarity.Uncommon });
-            _items.Add(new Item() { ItemType = ItemType.Ring, Rarity = Rarity.Rare });
+            // Reflection : X-Ray
+            Monster monster = new Monster();
+            
+            Type type = monster.GetType();
 
-            // delegate를 직접 선언하지 않아도, 이미 만들어진 애들이 존재한다.
-            // -> 반환 타입이 있을 경우 Func
-            // -> 반환 타입이 없다는 Action
+            var fields = type.GetFields(System.Reflection.BindingFlags.Public
+                | System.Reflection.BindingFlags.NonPublic
+                | System.Reflection.BindingFlags.Static
+                | System.Reflection.BindingFlags.Instance);
 
-            Func<Item, bool> selector = (Item item) => { return item.ItemType == ItemType.Weapon; });
+            foreach(FieldInfo field in fields)
+            {
+                string access = "protected";
+                if (field.IsPublic)
+                    access = "public";
+                else if (field.IsPrivate)
+                    access = "private";
 
-            // Lambda : 일회용 함수를 만드는데 사용하는 문법이다.
-            // Anonymous Function 무명 함수 / 익명 함수
-            Item item  = FindItem((Item item) => { return item.ItemType == ItemType.Weapon; });
-            //Item item2 = FindItem(delegate(Item item) { return item.ItemType == ItemType.Weapon; });
+                var attributes = field.GetCustomAttributes();
+
+                Console.WriteLine($"{access} {field.FieldType.Name} {field.Name}");
+            }
+
         }
-
     }
 }
 
