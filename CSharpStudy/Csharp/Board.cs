@@ -14,6 +14,9 @@ namespace Csharp
         public TileType[,] Tile { get; private set;}// 배열
         public int Size { get; private set; }
 
+        public int DestY { get; private set; }
+        public int DestX { get; private set; }
+
         Player _player;
 
         public enum TileType
@@ -32,6 +35,8 @@ namespace Csharp
             Tile = new TileType[size, size];
             Size = size;
 
+            DestY = Size - 2;
+            DestX = Size - 2;
             // Mazes for Programmers
             //GenerateByBinaryTree();
             GenerateSideWinder();
@@ -155,7 +160,9 @@ namespace Csharp
                     
                     if(y == _player.PosY && x == _player.PosX)
                         Console.ForegroundColor = ConsoleColor.Blue;
-                    else
+                    else if(y == DestY && x == DestX)
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                    else 
                         Console.ForegroundColor = GetTileColor(Tile[y, x]);
 
                     Console.Write(CIRCLE);
