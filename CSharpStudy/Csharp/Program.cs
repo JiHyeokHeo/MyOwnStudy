@@ -6,31 +6,50 @@ namespace Csharp
 {
     class Program
     {
-        // 객체지향 -> 은닉성
-        class Knight
+        // 업체 사장 - 사장님의 비서
+        // 우리의 연락처/용건
+        // 거꾸로 -> 연락을 달라고
+
+        // 함수 자체를 인자로 넘기는 방식 = 대리자
+
+        delegate int OnClicked();
+        // delegate -> 형식은 형식인데, 함수 자체를 인자로 넘겨주는 그런 형식
+        // 반환: int 입력: void
+        // OnClicked 이 delegate 형식의 이름이다.
+
+        // UI
+        static void ButtonPressed(OnClicked clickedFunction/* 함수 자체를 인자로 넘겨주고 */)
         {
-            // C#에서만 더 좋은 문법이 있는거다.
-            // C++에선 안된다.
-
-            // 자동 구현 프로퍼티  // C# 7.0 부터는 초기화까지 가능
-            public int Hp { get; set; } = 100;
-
-            //// Getter Get 함수
-            //public int GetHp() { return hp; }
-
-            //// Setter Set 함수
-            //public void SetHp(int hp) { this.hp = hp; }
+            clickedFunction();
         }
-       
+
+        // [ 10 20 40 30 50 ]
+
+        // 게임 관련 로직
+        static int TestDelegate()
+        {
+            Console.WriteLine("Hello Delegate");
+            return 0;
+        }
+
+        static int TestDelegate2()
+        {
+            Console.WriteLine("Hello Delegate 2");
+            return 0;
+        }
+
         static void Main(string[] args)
         {
-            // 프로퍼티
-            Knight knight = new Knight();
-            //knight.Hp = 100;
+            // delegate (대리자)
+            Console.WriteLine();
 
-            knight.Hp = 200;
+            // 이런식으로 채이닝 기법도 사용이 가능하다
+            OnClicked clicked = new OnClicked(TestDelegate);
+            clicked += TestDelegate2;
 
-            int hp = knight.Hp;
+
+            // C++ 함수 포인터랑 비슷하다
+            ButtonPressed(clicked);
         }
 
     }
