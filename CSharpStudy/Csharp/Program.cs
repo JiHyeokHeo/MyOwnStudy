@@ -10,8 +10,17 @@ namespace Csharp
         static void Main(string[] args)
         {
             Board board = new Board();
+            board.Initialize(25);
 
-            board.Initialize();
+            Console.CursorVisible = false;
+
+            int lastTick = 0;
+            while(true)
+            {
+                Console.SetCursorPosition(0, 0);
+                board.Render();
+            }
+
         }
     }
 }
