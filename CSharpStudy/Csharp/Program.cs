@@ -7,26 +7,11 @@ namespace Csharp
 {
     class Program
     {
-        static int Find()
-        {
-
-
-            return 0;
-        }
-
         static void Main(string[] args)
         {
-            // Nullable -> Null + able
-            int? number = null;
+            Board board = new Board();
 
-
-            if(number.HasValue)
-            {
-
-            }
-
-            int a = number.Value;
-            Console.WriteLine(a);
+            board.Initialize();
         }
     }
 }
